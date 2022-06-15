@@ -10,6 +10,7 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@typegoose/typegoose": "^9.9.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "eslint": "^8.17.0",
