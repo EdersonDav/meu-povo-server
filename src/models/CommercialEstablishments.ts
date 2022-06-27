@@ -29,6 +29,8 @@ class CommercialEstablishments {
   public address: Ref<Address>;
 }
 
-export const CommercialEstablishmentsModel = getModelForClass(
+const CommercialEstablishmentsModel = getModelForClass(
   CommercialEstablishments
 );
+
+export { CommercialEstablishments, CommercialEstablishmentsModel };

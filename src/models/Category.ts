@@ -8,6 +8,9 @@ import { getModelForClass, prop, modelOptions } from "@typegoose/typegoose";
 class Category {
   @prop()
   public name?: string;
+
+  @prop()
+  public code?: number;
 }
 
 const CategoryModel = getModelForClass(Category);
