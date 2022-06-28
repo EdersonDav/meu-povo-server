@@ -29,7 +29,7 @@ export class CommerceServices {
     return false;
   }
 
-  public async createCommerce(commerce: FullCommerce) {
+  public async create(commerce: FullCommerce) {
     if (await this.verifyExistsCommerce(commerce)) {
       throw new AppError(400, "This commerce already exists");
     }
@@ -53,5 +53,61 @@ export class CommerceServices {
     await newCommerce.save();
 
     return newCommerce;
+  }
+
+  public async getAll() {
+    const commerces = await CommercialEstablishmentsModel.find()
+      .populate("address")
+      .populate("category");
+
+    if (!commerces?.length) {
+      throw new AppError(404, "Commerces not found");
+    }
+
+    return commerces;
+  }
+
+  public async getByID(id: string) {
+    const commerce = await CommercialEstablishmentsModel.findById(id)
+      .populate("address")
+      .populate("category");
+    if (!commerce) {
+      throw new AppError(404, "Commerce not found");
+    }
+
+    return commerce;
+  }
+
+  public async update(id: string, commerce: FullCommerce) {
+    const commerceUp = await this.getByID(id);
+
+    const category = await CategoryModel.findOne({
+      code: commerce.categoryCode,
+    });
+
+    if (!category?.code) {
+      throw new AppError(404, "This category not found");
+    }
+
+    const addressUp = await AddressModel.updateOne(
+      { id: commerceUp.address },
+      {
+        ...commerce.address,
+      }
+    );
+
+    const updatedCommerce = await CommercialEstablishmentsModel.updateOne(
+      { id: commerceUp.id },
+      { ...commerceUp, category: category.id, address: addressUp.upsertedId }
+    );
+
+    return updatedCommerce.upsertedId;
+  }
+
+  public async delete(id: string) {
+    const commerce = await this.getByID(id);
+    await AddressModel.deleteOne({ id: commerce.address });
+    await CommercialEstablishmentsModel.deleteOne({ id: commerce.id });
+    return true;
   }
 }
