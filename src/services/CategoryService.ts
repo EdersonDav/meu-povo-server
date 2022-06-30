@@ -14,14 +14,15 @@ export class CategoryServices {
   }
 
   public async create(category: Category) {
-    if (await this.verifyExistsCategory(category)) {
+    const existsCategory = await this.verifyExistsCategory(category);
+    if (existsCategory) {
       throw new AppError(400, "This category already exists");
     }
-    const newCategory = new CategoryModel({ category });
+    const newCategory = new CategoryModel({ ...category });
 
     await newCategory.save();
 
-    return newCategory;
+    return this.getByID(String(newCategory._id));
   }
 
   public async getAll() {

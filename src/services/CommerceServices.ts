@@ -20,7 +20,9 @@ export class CommerceServices {
     });
 
     if (existisCommerce && existisCommerce.address) {
-      const addressExists = await AddressModel.findOne(existisCommerce.address);
+      const addressExists = await AddressModel.findOne({
+        ...existisCommerce.address,
+      });
 
       if (addressExists?.street === commerce.address.street) {
         return true;
@@ -30,7 +32,8 @@ export class CommerceServices {
   }
 
   public async create(commerce: FullCommerce) {
-    if (await this.verifyExistsCommerce(commerce)) {
+    const existsCommerce = await this.verifyExistsCommerce(commerce);
+    if (existsCommerce) {
       throw new AppError(400, "This commerce already exists");
     }
 
@@ -42,7 +45,7 @@ export class CommerceServices {
       throw new AppError(404, "This category not found");
     }
 
-    const newAddress = new AddressModel(commerce.address);
+    const newAddress = new AddressModel({ ...commerce.address });
 
     const newCommerce = new CommercialEstablishmentsModel({
       ...commerce,
