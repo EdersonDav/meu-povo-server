@@ -16,15 +16,14 @@ export class CommerceServices {
   private async verifyExistsCommerce(commerce: FullCommerce) {
     const existisCommerce = await CommercialEstablishmentsModel.findOne({
       name: commerce.name,
-      phone: commerce.phone,
-    });
+    }).populate("address");
 
     if (existisCommerce && existisCommerce.address) {
-      const addressExists = await AddressModel.findOne({
-        ...existisCommerce.address,
-      });
+      const addressExists = await AddressModel.findById(
+        existisCommerce.address
+      );
 
-      if (addressExists?.street === commerce.address.street) {
+      if (addressExists?.postalCode === commerce.address.postalCode) {
         return true;
       }
     }
@@ -47,10 +46,12 @@ export class CommerceServices {
 
     const newAddress = new AddressModel({ ...commerce.address });
 
+    await newAddress.save();
+
     const newCommerce = new CommercialEstablishmentsModel({
       ...commerce,
-      category,
-      address: newAddress,
+      category: category.id,
+      address: newAddress.id,
     });
 
     await newCommerce.save();

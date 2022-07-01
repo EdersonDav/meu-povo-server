@@ -13,12 +13,33 @@ export class CategoryServices {
     return false;
   }
 
+  private async autoIncrementCode(): Promise<number> {
+    const initialValue = 1;
+
+    const categories = await CategoryModel.find();
+
+    if (categories.length) {
+      const codes: number[] = categories
+        .map((category) => (category.code ? category.code : 0))
+        .sort((a, b) => Number(b) - Number(a));
+
+      return codes[0] + 1;
+    }
+
+    return initialValue;
+  }
+
   public async create(category: Category) {
     const existsCategory = await this.verifyExistsCategory(category);
     if (existsCategory) {
       throw new AppError(400, "This category already exists");
     }
-    const newCategory = new CategoryModel({ ...category });
+    const code = await this.autoIncrementCode();
+
+    const newCategory = new CategoryModel({
+      ...category,
+      code,
+    });
 
     await newCategory.save();
 

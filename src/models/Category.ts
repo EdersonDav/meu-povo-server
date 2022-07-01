@@ -1,19 +1,15 @@
 import { getModelForClass, prop, modelOptions } from "@typegoose/typegoose";
-import AutoIncrementFactory from "mongoose-sequence";
 
-import { connection } from "../database";
-
-// const AutoIncrement = AutoIncrementFactory(connection);
 @modelOptions({
   options: {
     customName: "categories",
   },
 })
 class Category {
-  @prop()
+  @prop({ unique: true, required: true })
   public name?: string;
 
-  @prop()
+  @prop({ index: true, required: true })
   public code?: number;
 }
 

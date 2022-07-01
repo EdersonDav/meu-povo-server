@@ -1,4 +1,7 @@
-import { connect as mongooseConnect, connection } from "mongoose";
+import {
+  connect as mongooseConnect,
+  connection as mongooseConnection,
+} from "mongoose";
 
 export const connect = async (): Promise<void> => {
   mongooseConnect(
@@ -11,6 +14,4 @@ export const connect = async (): Promise<void> => {
   );
 };
 
-export { connection };
-
-export const close = (): Promise<void> => connection.close();
+export const close = (): Promise<void> => mongooseConnection.close();

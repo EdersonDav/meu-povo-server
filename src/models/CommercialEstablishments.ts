@@ -4,7 +4,7 @@ import { Address } from "./Address";
 import { Category } from "./Category";
 
 class CommercialEstablishments {
-  @prop()
+  @prop({ require: true })
   public name?: string;
 
   @prop()
@@ -13,20 +13,20 @@ class CommercialEstablishments {
   @prop()
   public image?: string;
 
-  @prop()
+  @prop({ require: true })
   public phone?: number;
 
   @prop()
   public site?: string;
 
-  @prop({ ref: Category, type: String })
-  public category?: Ref<Category>;
+  @prop({ ref: () => Category, type: () => String, required: true })
+  public category?: Ref<Category, string>;
 
-  @prop()
+  @prop({ allowMixed: true, required: true })
   public working_time?: string[];
 
-  @prop({ ref: Address, type: String })
-  public address: Ref<Address>;
+  @prop({ ref: () => Address, type: () => String, required: true })
+  public address?: Ref<Address, string>;
 }
 
 const CommercialEstablishmentsModel = getModelForClass(

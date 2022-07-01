@@ -19,7 +19,7 @@ class Address {
   public postalCode?: number;
 
   @prop()
-  public city?: number;
+  public city?: string;
 
   @prop()
   public latitude?: number;
