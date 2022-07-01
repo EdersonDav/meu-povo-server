@@ -11,4 +11,6 @@ export const connect = async (): Promise<void> => {
   );
 };
 
+export { connection };
+
 export const close = (): Promise<void> => connection.close();

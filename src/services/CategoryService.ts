@@ -46,14 +46,17 @@ export class CategoryServices {
   }
 
   public async update(id: string, category: Category) {
-    const categoryUp = await CategoryModel.updateOne({ id }, { ...category });
+    const categoryUp = await CategoryModel.updateOne(
+      { id },
+      { name: category.name }
+    );
 
     return categoryUp.upsertedId;
   }
 
   public async delete(id: string) {
     const category = await this.getByID(id);
-    await CategoryModel.deleteOne({ id: category.id });
+    await CategoryModel.deleteOne({ _id: category.id });
     return true;
   }
 }

@@ -110,7 +110,7 @@ export class CommerceServices {
   public async delete(id: string) {
     const commerce = await this.getByID(id);
     await AddressModel.deleteOne({ id: commerce.address });
-    await CommercialEstablishmentsModel.deleteOne({ id: commerce.id });
+    await CommercialEstablishmentsModel.deleteOne({ _id: commerce.id });
     return true;
   }
 }
