@@ -43,6 +43,7 @@
         "no-empty-function": "off",
         "lines-between-class-members": "off",
         "no-underscore-dangle":"off",
+        " @typescript-eslint/no-explicit-any": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
