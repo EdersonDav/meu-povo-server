@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
 import S3Storage from "../aws_utils/S3Storage";
-import { AppError } from "../middlewares/Errors/AppError";
-import { CommerceServices } from "./CommerceServices";
 
 export class ImagesService {
 	private s3 = new S3Storage();

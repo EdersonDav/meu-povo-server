@@ -5,6 +5,7 @@ import {
   CommercialEstablishmentsModel,
   CommercialEstablishments,
 } from "../models/CommercialEstablishments";
+import { ImagesService } from "./ImagesService";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface FullCommerce extends CommercialEstablishments {
@@ -110,6 +111,12 @@ export class CommerceServices {
 
   public async delete(id: string) {
     const commerce = await this.getByID(id);
+    if (commerce?.image && commerce?.image?.split("/")?.length) {
+      const imagesService = new ImagesService();
+      const filename =
+        commerce?.image.split("/")[commerce.image.split("/").length - 1];
+      await imagesService.delete(filename);
+    }
     await AddressModel.deleteOne({ id: commerce.address });
     await CommercialEstablishmentsModel.deleteOne({ _id: commerce.id });
     return true;
