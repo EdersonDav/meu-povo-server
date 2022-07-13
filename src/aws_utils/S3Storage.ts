@@ -40,6 +40,7 @@ class S3Storage {
           Key: `${fileName}`,
           Body: fileContent,
           ContentType,
+          ACL: "public-read",
         })
       );
 

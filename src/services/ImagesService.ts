@@ -8,6 +8,7 @@ export class ImagesService {
 
 	public async create(file: Express.Multer.File) {
 		try {
+
 			const fileCreatedUrl = await this.s3.saveFile(file.filename);
 
 			return fileCreatedUrl;
@@ -16,19 +17,7 @@ export class ImagesService {
 		}
 	}
 
-	public async delete(id: string) {
-		const commerceServices = new CommerceServices();
-		const commerce = await commerceServices.getByID(id);
-		if (!commerce) {
-			throw new AppError(404, "Commerce not found");
-		}
-		const imageExists = commerce.image;
-		if (!imageExists) {
-			throw new AppError(404, "Image not found");
-		}
-
-		const filename =
-			imageExists.split("/")[imageExists.split("/").length - 1];
+	public async delete(filename: string) {
 		await this.s3.deleteFile(filename);
 	}
 }
