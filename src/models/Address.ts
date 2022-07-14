@@ -10,6 +10,12 @@ class Address {
   public country?: string;
 
   @prop()
+  public address_number?: number;
+
+  @prop({ default: "" })
+  public complement?: string;
+
+  @prop()
   public street?: string;
 
   @prop()
