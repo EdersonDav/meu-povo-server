@@ -27,6 +27,9 @@ class CommercialEstablishments {
 
   @prop({ ref: () => Address, type: () => String, required: true })
   public address?: Ref<Address, string>;
+
+  @prop()
+  public nationality?: string;
 }
 
 const CommercialEstablishmentsModel = getModelForClass(
