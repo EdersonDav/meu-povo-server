@@ -121,4 +121,15 @@ export class CommerceServices {
     await CommercialEstablishmentsModel.deleteOne({ _id: commerce.id });
     return true;
   }
+
+  public async getCountriesCommerces(): Promise<string[]> {
+    const commerces = await this.getAll();
+    if (!commerces?.length) {
+      return [];
+    }
+    const countries: string[] = commerces.map(
+      (com) => com?.nationality?.toLocaleLowerCase() || ""
+    );
+    return countries;
+  }
 }

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import { CategoryServices } from "../services/CategoryService";
+import { CountryService } from "../services/CountryService";
 
 export class CategoryController {
   // eslint-disable-next-line consistent-return
@@ -48,5 +49,16 @@ export class CategoryController {
     const newCategory = await categoryServices.update(id, category);
 
     return res.json(newCategory);
+  }
+
+  public async getAllCategoriesAndCountries(req: Request, res: Response) {
+    const categoryServices = new CategoryServices();
+    const countryService = new CountryService();
+
+    const categories = await categoryServices.getAll();
+
+    const countries = await countryService.getInitialCountryList();
+
+    return res.json({ categories, countries });
   }
 }
