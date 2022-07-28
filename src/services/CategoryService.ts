@@ -80,4 +80,17 @@ export class CategoryServices {
     await CategoryModel.deleteOne({ _id: category.id });
     return true;
   }
+
+  public async getInitialCategory() {
+    const categories = await this.getAll();
+
+    if (!categories) {
+      return [];
+    }
+
+    return categories.map((category) => ({
+      name: category.name,
+      code: String(category.code),
+    }));
+  }
 }

@@ -55,7 +55,7 @@ export class CategoryController {
     const categoryServices = new CategoryServices();
     const countryService = new CountryService();
 
-    const categories = await categoryServices.getAll();
+    const categories = await categoryServices.getInitialCategory();
 
     const countries = await countryService.getInitialCountryList();
 
