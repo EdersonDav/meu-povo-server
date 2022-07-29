@@ -132,4 +132,21 @@ export class CommerceServices {
     );
     return countries;
   }
+
+  public async search(nationality: string, categoryCode?: string) {
+    const where: { nationality: string; category?: string } = { nationality };
+    if (categoryCode) {
+      const categoryDB = await CategoryModel.findOne({
+        code: Number(categoryCode),
+      });
+      if (categoryDB) {
+        where.category = categoryDB._id;
+      }
+    }
+    const commerces = await CommercialEstablishmentsModel.find(where);
+    if (!commerces?.length) {
+      throw new AppError(404, "Commerces not found");
+    }
+    return commerces;
+  }
 }

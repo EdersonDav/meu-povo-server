@@ -48,4 +48,19 @@ export class CommerceController {
 
     return res.json(newCommerce);
   }
+
+  public async search(req: Request, res: Response) {
+    const { nationality } = req.query;
+    const category = req.query.category
+      ? String(req.query.category)
+      : undefined;
+    const commerceServices = new CommerceServices();
+
+    const commerce = await commerceServices.search(
+      String(nationality).toLocaleLowerCase(),
+      category
+    );
+
+    return res.json(commerce);
+  }
 }
