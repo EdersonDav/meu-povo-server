@@ -143,7 +143,9 @@ export class CommerceServices {
         where.category = categoryDB._id;
       }
     }
-    const commerces = await CommercialEstablishmentsModel.find(where);
+    const commerces = await CommercialEstablishmentsModel.find(where)
+      .populate("address")
+      .populate("category");
     if (!commerces?.length) {
       throw new AppError(404, "Commerces not found");
     }
