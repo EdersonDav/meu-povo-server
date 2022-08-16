@@ -1,5 +1,10 @@
 import { getModelForClass, prop, modelOptions } from "@typegoose/typegoose";
 
+export interface ICategoryName {
+  en: string;
+  pt: string;
+}
+
 @modelOptions({
   options: {
     customName: "categories",
@@ -7,7 +12,7 @@ import { getModelForClass, prop, modelOptions } from "@typegoose/typegoose";
 })
 class Category {
   @prop({ unique: true, required: true })
-  public name?: string;
+  public name?: ICategoryName;
 
   @prop({ index: true, required: true })
   public code?: number;
