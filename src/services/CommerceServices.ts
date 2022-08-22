@@ -103,7 +103,7 @@ export class CommerceServices {
 
     const updatedCommerce = await CommercialEstablishmentsModel.updateOne(
       { id: commerceUp.id },
-      { ...commerceUp, category: category.id, address: addressUp.upsertedId }
+      { ...commerce, category: category.id, address: addressUp.upsertedId }
     );
 
     return updatedCommerce.upsertedId;
