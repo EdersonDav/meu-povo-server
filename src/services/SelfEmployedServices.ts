@@ -94,7 +94,7 @@ export class SelfEmployedServices {
   }
 
   public async getCountriesSelfEmployeds(): Promise<string[]> {
-    const selfEmployeds = await this.getAll();
+    const selfEmployeds = await SelfEmployedModel.find();
     if (!selfEmployeds?.length) {
       return [];
     }

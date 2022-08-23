@@ -123,7 +123,7 @@ export class CommerceServices {
   }
 
   public async getCountriesCommerces(): Promise<string[]> {
-    const commerces = await this.getAll();
+    const commerces = await CommercialEstablishmentsModel.find();
     if (!commerces?.length) {
       return [];
     }

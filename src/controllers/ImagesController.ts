@@ -13,8 +13,8 @@ export class ImagesController {
       const imagesService = new ImagesService();
       const data = await imagesService.create(file);
       return res.status(201).json({ url: data });
-    } catch (error: any) {
-      return res.status(500).json({ message: error.message });
+    } catch (error) {
+      return res.status(500).json({ message: (error as Error).message });
     }
   }
 
@@ -24,8 +24,8 @@ export class ImagesController {
       const imagesService = new ImagesService();
       await imagesService.delete(fileName);
       return res.status(204).end();
-    } catch (error: any) {
-      return res.status(500).json({ message: error.message });
+    } catch (error) {
+      return res.status(500).json({ message: (error as Error).message });
     }
   }
 }
